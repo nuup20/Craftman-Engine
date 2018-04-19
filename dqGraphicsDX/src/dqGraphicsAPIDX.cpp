@@ -2,7 +2,9 @@
 
 namespace dqEngineSDK
 {
-  DXGI_FORMAT ColorFormatTraductor(dqColorFormat::E cF)
+  
+  DXGI_FORMAT
+  ColorFormatTraductor(dqColorFormat::E cF)
   {
     switch (cF)
     {
@@ -20,7 +22,10 @@ namespace dqEngineSDK
   {
     Clean();
   }
-  void dqGraphicsAPIDX::Init(void* hWnd, dqWindowMode::E wndMode, dqColorFormat::E colorFormat)
+  
+  void 
+  dqGraphicsAPIDX::Init(void* hWnd, dqWindowMode::E wndMode, 
+                        dqColorFormat::E colorFormat )
   {
     //Cast void* to Window Pointer.
     HWND* myWind = static_cast<HWND*>(hWnd);
@@ -38,7 +43,7 @@ namespace dqEngineSDK
 
     swapChainDesc.BufferCount = 1;                                  // Number of Back Buffers.
     swapChainDesc.BufferDesc.Format = cFormat;                      // Color Format.
-    swapChainDesc.BufferDesc.Width = SCREEN_WIDTH;                 // Screen Width.
+    swapChainDesc.BufferDesc.Width = SCREEN_WIDTH;                  // Screen Width.
     swapChainDesc.BufferDesc.Height = SCREEN_HEIGHT;                // Screen Height.
     swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;    // How SC is to be used.
     swapChainDesc.OutputWindow = *myWind;                           // The window to be used.
@@ -93,14 +98,12 @@ namespace dqEngineSDK
     /************************************************************************/
     /* Triangle                                                             */
     /************************************************************************/
-    //m_testTriangle.Init();
-    //m_device.createBuffer(m_testTriangle);
-    //m_deviceContext.mapGeometry(m_testTriangle);
-
     m_testTriangleModel.createTriangle( &m_device );
 
   }
-  void dqGraphicsAPIDX::Clean()
+  
+  void 
+  dqGraphicsAPIDX::Clean()
   {
     m_swapChain.Clear();
     m_vertexShader.Clear();
@@ -111,24 +114,26 @@ namespace dqEngineSDK
     m_viewport.Destroy();
   }
 
-  void dqGraphicsAPIDX::AddGeometry()
+  void 
+  dqGraphicsAPIDX::AddGeometry()
   {
   }
 
-  void dqGraphicsAPIDX::RenderFrame()
+  void 
+  dqGraphicsAPIDX::RenderFrame()
   {
     LinearColor clearColor(0.0f, 0.0f, 1.0f, 1.0f);
     m_deviceContext.clearRenderTargetView(m_backBuffer, clearColor);
 
-    m_testTriangleModel.setBuffers(m_deviceContext);
-    //m_deviceContext.setVertexBuffers(1, m_testTriangle, sizeof(dqVertexDX), 0);
+    m_testTriangleModel.setBuffers( m_deviceContext );
     m_deviceContext.setPrimitiveTopology();
     m_deviceContext.draw(3, 0);
 
     m_swapChain.Present();
   }
 
-  void dqGraphicsAPIDX::InitPipeline()
+  void 
+  dqGraphicsAPIDX::InitPipeline()
   {
     //Load and compile the two shaders.
     m_vertexShader.CompileFromFile(L"shaders.shader", "VShader");

@@ -10,7 +10,7 @@ namespace dqEngineSDK
   }
   void dqTriangleDX::Init()
   {
-    ZeroMemory(&m_bd, sizeof(m_bd));
+    SecureZeroMemory(&m_bd, sizeof(m_bd));
     
     m_bd.Usage = D3D11_USAGE_DYNAMIC;               // write Access Access by CPU and GPU.
     m_bd.ByteWidth = sizeof(dqVertexDX) * 3;

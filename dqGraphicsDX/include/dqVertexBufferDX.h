@@ -81,6 +81,8 @@ namespace dqEngineSDK
     /* Buffer Description                                                   */
     /************************************************************************/
     D3D11_BUFFER_DESC bufferDesc;
+    SecureZeroMemory(&bufferDesc, sizeof(bufferDesc));
+
     bufferDesc.Usage =            D3D11_USAGE_DEFAULT;
     bufferDesc.ByteWidth =        sizeof( T ) * m_vertexList.size();
     bufferDesc.BindFlags =        D3D11_BIND_VERTEX_BUFFER;

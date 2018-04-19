@@ -52,16 +52,21 @@ namespace dqEngineSDK
   }
 
   HRESULT 
-  dqDeviceDX::createBuffer(D3D11_BUFFER_DESC* descriptor,
-                           D3D11_SUBRESOURCE_DATA * subresource,
-                           ID3D11Buffer ** buffer)
+  dqDeviceDX::createBuffer(
+                            D3D11_BUFFER_DESC *      descriptor,
+                            D3D11_SUBRESOURCE_DATA * subresource,
+                            ID3D11Buffer **          buffer
+                          )
   {
     HRESULT hr;
-    hr = m_device->CreateBuffer(descriptor,
-                           subresource,
-                           buffer);
+    hr = m_device->CreateBuffer(  
+                                descriptor,
+                                subresource,
+                                buffer
+                               );
     return hr;
   }
+  
   void dqDeviceDX::createInputLayout(dqInputLayoutDX & iLayout, dqVertexShaderDX & vShader)
   {
    m_device->CreateInputLayout(iLayout.ied, 

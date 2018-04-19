@@ -23,7 +23,7 @@ namespace dqEngineSDK
     
   private:
     ID3D11Buffer *          m_pIndexBuffer;    
-    Vector < T > *          m_pIndexList;
+    Vector < T >            m_pIndexList;
   };  
 
   template<typename T>
@@ -55,20 +55,19 @@ namespace dqEngineSDK
     /************************************************************************/
     /* Copy Indices                                                         */
     /************************************************************************/
-    if (m_pIndexList != nullptr)
+    if (!m_pIndexList.empty())
     {
-      m_pIndexList->clear();
-      delete m_pIndexList;
+      m_pIndexList->clear();      
     }
 
-    m_pIndexList = new Vector< T >( pIndices );
+    m_pIndexList = pIndices;
 
     /************************************************************************/
     /* Buffer Description                                                   */
     /************************************************************************/
     D3D11_BUFFER_DESC             bufferDesc;
     bufferDesc.Usage =            D3D11_USAGE_DEFAULT;
-    bufferDesc.ByteWidth =        sizeof(T) * pIndices.size();
+    bufferDesc.ByteWidth =        sizeof(T) * m_pIndexList.size();
     bufferDesc.BindFlags =        D3D11_BIND_INDEX_BUFFER;
     bufferDesc.CPUAccessFlags =   0;
     bufferDesc.MiscFlags =        0;

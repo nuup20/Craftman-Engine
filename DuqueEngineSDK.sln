@@ -4,13 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dqUtility", "dqUtility\dqUtility.vcxproj", "{28DA56EE-2694-4D90-8CB4-BC043C31D682}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dqGraphicsDX", "dqGraphicsDX\dqGraphicsDX.vcxproj", "{271652F2-7D13-47FD-9603-BEB21C1E546E}"
 	ProjectSection(ProjectDependencies) = postProject
-		{28DA56EE-2694-4D90-8CB4-BC043C31D682} = {28DA56EE-2694-4D90-8CB4-BC043C31D682}
+		{271652F2-7D13-47FD-9603-BEB21C1E546E} = {271652F2-7D13-47FD-9603-BEB21C1E546E}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dqGraphicsDX", "dqGraphicsDX\dqGraphicsDX.vcxproj", "{271652F2-7D13-47FD-9603-BEB21C1E546E}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Unit_Test", "Unit_Test\Unit_Test.vcxproj", "{C353ACFE-C208-45CE-BC35-CBAE59EC8914}"
+	ProjectSection(ProjectDependencies) = postProject
+		{28DA56EE-2694-4D90-8CB4-BC043C31D682} = {28DA56EE-2694-4D90-8CB4-BC043C31D682}
+		{271652F2-7D13-47FD-9603-BEB21C1E546E} = {271652F2-7D13-47FD-9603-BEB21C1E546E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

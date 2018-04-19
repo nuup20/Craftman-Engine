@@ -73,7 +73,11 @@ namespace dqEngineSDK
     /************************************************************************/
     dqMeshDX * triangleMesh = new dqMeshDX();
     triangleMesh->create(device, triVertices, triIndices);
-
+    
+    /************************************************************************/
+    /* Add Mesh to mesh list.                                               */
+    /************************************************************************/
+    m_meshList.push_back(triangleMesh);
     return;
   }
 }

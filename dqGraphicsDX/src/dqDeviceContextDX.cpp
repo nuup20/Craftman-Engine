@@ -105,7 +105,7 @@ namespace dqEngineSDK
   }
 
   void 
-    dqDeviceContextDX::draw(int32 nVertex, int32 fVertex) {
+    dqDeviceContextDX::draw(uint32 nVertex, uint32 fVertex) {
     m_devCont->Draw(nVertex, fVertex);
   }
 

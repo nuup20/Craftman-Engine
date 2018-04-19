@@ -1,7 +1,8 @@
 #pragma once
 struct ID3D11DeviceContext;
 
-namespace dqEngineSDK {
+namespace dqEngineSDK 
+{
   class dqVertexShaderDX;
   class dqPixelShaderDX;
   class dqRenderTargetDX;
@@ -109,7 +110,7 @@ namespace dqEngineSDK {
      * @param Start Vertex Location.
      */
     void
-    draw(int32 nVertex, int32 fVertex);
+    draw(uint32 nVertex, uint32 fVertex);
     
     /**
      * @brief Clear a renderTarger with a color.
