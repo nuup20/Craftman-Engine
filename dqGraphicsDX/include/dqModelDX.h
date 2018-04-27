@@ -36,10 +36,7 @@ namespace dqEngineSDK
       addVertexShader(dqVertexShaderDX* pVertexShader);
 
     void
-      addPixelShader(dqPixelShaderDX* pPixelShader);
-    
-    void
-      loadModelFromFile(String modelPath);
+      addPixelShader(dqPixelShaderDX* pPixelShader);    
 
     void 
     createPlane( dqPlane* plane, int32 divX, int32 divY );

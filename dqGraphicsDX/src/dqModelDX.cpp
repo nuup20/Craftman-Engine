@@ -1,17 +1,11 @@
 #include "dqModelDX.h"
 
-#include <assimp/cimport.h>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
 #include "dqDeviceDX.h"
 #include "dqDeviceContextDX.h"
 #include "dqPlane.h"
 #include "dqMeshDX.h"
 #include "dqPixelShaderDX.h"
 #include "dqVertexShaderDX.h"
-
-
 
 namespace dqEngineSDK
 {
@@ -76,25 +70,6 @@ namespace dqEngineSDK
     for (auto mesh : m_meshList) {
       mesh->setMaterialPixelShader(pPixelShader);
     }
-  }
-
-  void dqModelDX::loadModelFromFile(String modelPath)
-  {
-    /************************************************************************/
-    /* Load Scene                                                           */
-    /************************************************************************/
-    const aiScene* scene = aiImportFile(modelPath,
-                           aiProcessPreset_TargetRealtime_MaxQuality);
-  
-    if (scene == nullptr) {
-      //Error.
-      return;
-    }
-
-    /************************************************************************/
-    /* Release Scene                                                        */
-    /************************************************************************/
-    aiReleaseImport(scene);
   }
   
   void 
