@@ -8,10 +8,14 @@ namespace dqEngineSDK
     dqViewportDX();
     ~dqViewportDX();
 
-    void Init(int32 width, int32 heigth);
-    void Destroy();
+    void 
+    Init(int32 width, int32 heigth);
+    
+    void 
+    Destroy();
 
-    D3D11_VIEWPORT *  GetPointer();
+    D3D11_VIEWPORT*  
+    GetPointer();
 
   private:
     D3D11_VIEWPORT m_viewport;

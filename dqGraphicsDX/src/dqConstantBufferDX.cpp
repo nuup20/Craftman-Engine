@@ -2,10 +2,5 @@
 
 namespace dqEngineSDK
 {
-  dqConstantBufferDX::dqConstantBufferDX()
-  {
-  }
-  dqConstantBufferDX::~dqConstantBufferDX()
-  {
-  }
+
 }

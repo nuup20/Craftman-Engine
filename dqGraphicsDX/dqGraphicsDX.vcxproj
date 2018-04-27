@@ -93,7 +93,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)dqUtility/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)assimp/include/;./include/;$(SolutionDir)dqUtility/include/;$(SolutionDir)assimp/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PreprocessorDefinitions>DQ_GRAPHICSDX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp14</LanguageStandard>
@@ -113,7 +113,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)dqUtility/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)assimp/include/;./include/;$(SolutionDir)dqUtility/include/;$(SolutionDir)assimp/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PreprocessorDefinitions>DQ_GRAPHICSDX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp14</LanguageStandard>
@@ -137,7 +137,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>DQ_GRAPHICSDX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)dqUtility/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)assimp/include/;./include/;$(SolutionDir)dqUtility/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -160,7 +160,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>DQ_GRAPHICSDX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)dqUtility/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)assimp/include/;./include/;$(SolutionDir)dqUtility/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -181,8 +181,9 @@
     <ClCompile Include="src\dqGraphicsBufferDX.cpp" />
     <ClCompile Include="src\dqGraphicsDX.cpp" />
     <ClCompile Include="src\dqIndexBufferDX.cpp" />
-    <ClCompile Include="src\dqIndexShaderDX.cpp" />
+    <ClCompile Include="src\dqInfoCollector.cpp" />
     <ClCompile Include="src\dqInputLayoutDX.cpp" />
+    <ClCompile Include="src\dqMaterialDX.cpp" />
     <ClCompile Include="src\dqMeshDX.cpp" />
     <ClCompile Include="src\dqModelDX.cpp" />
     <ClCompile Include="src\dqPixelShaderDX.cpp" />
@@ -190,7 +191,6 @@
     <ClCompile Include="src\dqShaderDX.cpp" />
     <ClCompile Include="src\dqSwapChainDX.cpp" />
     <ClCompile Include="src\dqTextureDX.cpp" />
-    <ClCompile Include="src\dqTriangleDX.cpp" />
     <ClCompile Include="src\dqVertexBufferDX.cpp" />
     <ClCompile Include="src\dqVertexShaderDX.cpp" />
     <ClCompile Include="src\dqViewportDX.cpp" />
@@ -201,11 +201,12 @@
     <ClInclude Include="include\dqDeviceDX.h" />
     <ClInclude Include="include\dqGraphicsAPIDX.h" />
     <ClInclude Include="include\dqGraphicsBufferDX.h" />
+    <ClInclude Include="include\dqGraphicsCommons.h" />
     <ClInclude Include="include\dqGraphicsDX.h" />
     <ClInclude Include="include\dqGraphicsDXPrerequisites.h" />
     <ClInclude Include="include\dqIndexBufferDX.h" />
-    <ClInclude Include="include\dqIndexShaderDX.h" />
     <ClInclude Include="include\dqInputLayoutDX.h" />
+    <ClInclude Include="include\dqMaterialDX.h" />
     <ClInclude Include="include\dqMeshDX.h" />
     <ClInclude Include="include\dqModelDX.h" />
     <ClInclude Include="include\dqPixelShaderDX.h" />
@@ -213,11 +214,11 @@
     <ClInclude Include="include\dqShaderDX.h" />
     <ClInclude Include="include\dqSwapChainDX.h" />
     <ClInclude Include="include\dqTextureDX.h" />
-    <ClInclude Include="include\dqTriangleDX.h" />
     <ClInclude Include="include\dqVertexBufferDX.h" />
     <ClInclude Include="include\dqVertexDX.h" />
     <ClInclude Include="include\dqVertexShaderDX.h" />
     <ClInclude Include="include\dqViewportDX.h" />
+    <ClInclude Include="include\dqInfoCollector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

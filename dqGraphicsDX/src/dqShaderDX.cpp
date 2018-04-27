@@ -8,23 +8,31 @@ namespace dqEngineSDK
   dqShaderDX::dqShaderDX()
   {
   }
+
   dqShaderDX::~dqShaderDX()
   {
   }
 
-  ID3D10Blob * dqShaderDX::GetBlobPointer()
+  ID3D10Blob* 
+  dqShaderDX::getBlobPointer()
   {
     return m_blob;
   }
-  ID3D10Blob ** dqShaderDX::GetBlobReference()
+
+  ID3D10Blob** 
+  dqShaderDX::getBlobReference()
   {
     return &m_blob;
   }
-  void* dqShaderDX::GetBufferPointer()
+
+  void* 
+  dqShaderDX::getBufferPointer()
   {
     return m_blob->GetBufferPointer();
   }
-  SIZE_T dqShaderDX::GetBufferSize()
+
+  SIZE_T 
+  dqShaderDX::getBufferSize()
   {
     return m_blob->GetBufferSize();
   }

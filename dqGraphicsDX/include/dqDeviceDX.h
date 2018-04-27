@@ -62,14 +62,14 @@ namespace dqEngineSDK
     */
     HRESULT    
     createBuffer(D3D11_BUFFER_DESC* descriptor,
-                   D3D11_SUBRESOURCE_DATA * subresource,
-                   ID3D11Buffer ** buffer);
+                 D3D11_SUBRESOURCE_DATA* subresource,
+                 ID3D11Buffer** buffer);
     
     /**
     *  @brief Create an Input Layout.
     */
     void    
-    createInputLayout(dqInputLayoutDX &, dqVertexShaderDX &);
+    createInputLayout(dqInputLayoutDX&, dqVertexShaderDX&);
     
     /**
     *  @brief Returns a reference of D3D11 Interface Device.
@@ -78,7 +78,7 @@ namespace dqEngineSDK
     getReference();
     
   private:
-    ID3D11Device * m_device; /**< ID3D11Device pointer. */
+    ID3D11Device* m_device; /**< ID3D11Device pointer. */
   };
 }
 

@@ -4,6 +4,10 @@
 
 namespace dqEngineSDK
 {
+  class dqDeviceDX;
+  class dqDeviceContextDX;
+  class dqInfoCollector;
+
   class DQ_GRAPHICSDX_EXPORT dqVertexShaderDX :
     public dqShaderDX
   {
@@ -11,13 +15,20 @@ namespace dqEngineSDK
     dqVertexShaderDX();
     ~dqVertexShaderDX();
     
-    void Clear();
+    void create(WString fileDirectory, 
+                String functionName, 
+                dqDeviceDX& device);
 
-    virtual void CompileFromFile(const WString& file, const String& funcName);
-    ID3D11VertexShader *  GetPVS();
-    ID3D11VertexShader ** GetPVSReference();
+    void clear();
+    void setInfoCollector(dqInfoCollector* pInfoCollector);
+
+    void  compileFromFile(const WString& file, const String& funcName);
+   
+    ID3D11VertexShader*  getPVS();
+    ID3D11VertexShader** getPVSReference();
 
   private:
-    ID3D11VertexShader * m_pVS;
+    ID3D11VertexShader * m_pVertexShader;
+    dqInfoCollector* m_pInfoCollector;
   };
 }

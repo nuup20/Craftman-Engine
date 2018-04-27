@@ -12,11 +12,23 @@ namespace dqEngineSDK
     dqRenderTargetDX(const dqRenderTargetDX&);
     ~dqRenderTargetDX();
 
-    void Init();
-    void Clear();
+    void 
+    init();
+    
+    void 
+    clear();
 
-    ID3D11RenderTargetView **   GetRTViewReference();
-    ID3D11RenderTargetView *    GetRTViewPointer();
+    /**
+     * Get Render Target View Reference.
+     */
+    ID3D11RenderTargetView**   
+    getRTViewReference();    
+
+    /**
+     * Get Render Target View Pointer.
+     */
+    ID3D11RenderTargetView*    
+    getRTViewPointer();
 
   private:
     ID3D11RenderTargetView * m_renderTargetView;

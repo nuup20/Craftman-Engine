@@ -9,9 +9,10 @@
 #include "dqViewportDX.h"
 #include "dqVertexShaderDX.h"
 #include "dqPixelShaderDX.h"
-#include "dqTriangleDX.h"
 #include "dqInputLayoutDX.h"
+#include "dqColor.h"
 #include "dqModelDX.h"
+#include "dqInfoCollector.h"
 
 namespace dqEngineSDK
 {
@@ -45,26 +46,29 @@ namespace dqEngineSDK
     Clean();
     
     void 
-    AddGeometry();
+    addGeometry(dqModelDX & model);
     
     void 
     RenderFrame();
 
-  private:
-    void 
-    InitPipeline();
+    void
+    createAndSetInputLayout(dqVertexShaderDX& vertexShader);
 
+    dqDeviceDX *
+    getDevice();
+
+  private:
     dqDeviceDX            m_device;
     dqDeviceContextDX     m_deviceContext;
     dqSwapChainDX         m_swapChain;
     dqRenderTargetDX      m_backBuffer;
-    dqViewportDX          m_viewport;
-    dqVertexShaderDX      m_vertexShader;
-    dqPixelShaderDX       m_pixelShader;
+    dqViewportDX          m_viewport;    
     dqInputLayoutDX       m_inputLayout;
 
-    dqTriangleDX          m_testTriangle;
-    dqModelDX             m_testTriangleModel;
+    LinearColor           m_clearColor;
+    Vector < dqModelDX* > m_modelList;
+
+    dqInfoCollector       m_infoCollector;
   };
 }
 

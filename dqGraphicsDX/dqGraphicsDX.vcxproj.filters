@@ -25,11 +25,14 @@
     <Filter Include="Source Files\Buffers">
       <UniqueIdentifier>{a8491d1c-ed32-4818-a8fe-b8e0d277462b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Others">
+      <UniqueIdentifier>{54c360b4-362c-4912-b750-59b87003e9a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Others">
+      <UniqueIdentifier>{5a1a3787-efe1-4832-a18a-f108221979fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\dqConstantBufferDX.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\dqDeviceContextDX.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,9 +60,6 @@
     <ClCompile Include="src\dqTextureDX.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\dqTriangleDX.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\dqViewportDX.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -72,9 +72,6 @@
     <ClCompile Include="src\dqGraphicsBufferDX.cpp">
       <Filter>Source Files\Buffers</Filter>
     </ClCompile>
-    <ClCompile Include="src\dqIndexShaderDX.cpp">
-      <Filter>Source Files\Shaders</Filter>
-    </ClCompile>
     <ClCompile Include="src\dqPixelShaderDX.cpp">
       <Filter>Source Files\Shaders</Filter>
     </ClCompile>
@@ -86,6 +83,15 @@
     </ClCompile>
     <ClCompile Include="src\dqModelDX.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dqMaterialDX.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dqInfoCollector.cpp">
+      <Filter>Source Files\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dqConstantBufferDX.cpp">
+      <Filter>Source Files\Buffers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,9 +122,6 @@
     <ClInclude Include="include\dqTextureDX.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\dqTriangleDX.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\dqVertexDX.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -146,14 +149,20 @@
     <ClInclude Include="include\dqPixelShaderDX.h">
       <Filter>Header Files\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="include\dqIndexShaderDX.h">
-      <Filter>Header Files\Shaders</Filter>
-    </ClInclude>
     <ClInclude Include="include\dqMeshDX.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\dqModelDX.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\dqGraphicsCommons.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\dqMaterialDX.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\dqInfoCollector.h">
+      <Filter>Header Files\Others</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ namespace dqEngineSDK
   class dqViewportDX;
   class dqTriangleDX;
 
-  struct LinearColor;
+  struct LinearColor;  
 
   /**
   * Device Context Class that uses the D3D11 Graphic Library.
@@ -62,28 +62,21 @@ namespace dqEngineSDK
     *  @param Vertex Shader reference.
     */
     void 
-    vsSetShader(dqVertexShaderDX &);
+    vsSetShader(dqVertexShaderDX&);
 
     /**
     *  @brief Set a pixel shader.
     *  @param Pixel Shader reference.
     */
     void 
-    psSetShader(dqPixelShaderDX &);
-    
-    /**
-    *  @brief Map information from CPU to GPU.
-    *  @param Geometry reference.
-    */
-    void 
-    mapGeometry(const dqTriangleDX &);
+    psSetShader(dqPixelShaderDX&);   
     
     /**
     *  @brief Set input layer in the Device Context.
     *  @param Reference to a Input Layout.
     */
     void 
-    setInputLayout(dqInputLayoutDX &);
+    setInputLayout(dqInputLayoutDX&);
     
     /**
     *  @brief Set vertexBuffers in the Device Context.
@@ -94,7 +87,7 @@ namespace dqEngineSDK
     */
     void 
     setVertexBuffers(uint32, 
-                     ID3D11Buffer **,
+                     ID3D11Buffer**,
                      uint32,
                      uint32);
     
@@ -102,7 +95,7 @@ namespace dqEngineSDK
     *  @brief Set a primitive Topology.
     */
     void 
-    setPrimitiveTopology();
+    setPrimitiveTopology( PRIMITIVE_TOPOLOGY::E topology );
     
     /**
      * @brief Draw 
@@ -119,7 +112,7 @@ namespace dqEngineSDK
      */
     void
     clearRenderTargetView(dqRenderTargetDX& renderTarget,
-                          LinearColor & clearColor);
+                          LinearColor& clearColor);
 
     /**
     *  @brief Returns a reference of D3D11 Interface Device Context.
@@ -128,6 +121,10 @@ namespace dqEngineSDK
     getReference();
 
   private:
+
+    D3D_PRIMITIVE_TOPOLOGY
+    primitiveTopologyTraductor( PRIMITIVE_TOPOLOGY::E topology );
+
     ID3D11DeviceContext* m_devCont; /**< ID3D11DeviceContext pointer. */
   };
 }

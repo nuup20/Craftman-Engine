@@ -24,9 +24,12 @@ namespace dqEngineSDK
   }
   
   void 
-  dqGraphicsAPIDX::Init(void* hWnd, dqWindowMode::E wndMode, 
+  dqGraphicsAPIDX::Init(void* hWnd, 
+                        dqWindowMode::E wndMode, 
                         dqColorFormat::E colorFormat )
   {
+    m_infoCollector.init();
+    
     //Cast void* to Window Pointer.
     HWND* myWind = static_cast<HWND*>(hWnd);
 
@@ -56,20 +59,24 @@ namespace dqEngineSDK
       swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH; // Allow Full-Screen Switching.
     }
 
+    DWORD flags = 0;
+#if DQ_DEBUG_MODE
+    flags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
+
     //Create Device and SwapChain
-    HRESULT hr = D3D11CreateDeviceAndSwapChain(
-      nullptr,
-      D3D_DRIVER_TYPE_HARDWARE,
-      nullptr,
-      0,
-      nullptr,
-      0,
-      D3D11_SDK_VERSION,
-      &swapChainDesc,
-      m_swapChain.GetReference(),
-      m_device.getReference(),
-      nullptr,
-      m_deviceContext.getReference());
+    HRESULT hr = D3D11CreateDeviceAndSwapChain( nullptr,
+                                                D3D_DRIVER_TYPE_HARDWARE,
+                                                nullptr,
+                                                flags,
+                                                nullptr,
+                                                0,
+                                                D3D11_SDK_VERSION,
+                                                &swapChainDesc,
+                                                m_swapChain.GetReference(),
+                                                m_device.getReference(),
+                                                nullptr,
+                                                m_deviceContext.getReference());
 
     if (FAILED(hr))
     {
@@ -83,72 +90,75 @@ namespace dqEngineSDK
     m_device.createRenderTargetView(m_backBuffer);
     m_deviceContext.setRenderTargets(1, m_backBuffer);
 
-
     /************************************************************************/
     /* Viewport Initialization                                              */
     /************************************************************************/
+
+    //Set Viewport
     m_viewport.Init(SCREEN_WIDTH, SCREEN_HEIGHT);
     m_deviceContext.setViewport(1, m_viewport);
 
     /************************************************************************/
-    /* Pipeline Initialization                                              */
+    /* Clear Color                                                          */
     /************************************************************************/
-    InitPipeline();
+    m_clearColor.r = 0.f;
+    m_clearColor.g = 0.f;
+    m_clearColor.b = 1.f;
+    m_clearColor.a = 1.f;
 
     /************************************************************************/
-    /* Triangle                                                             */
+    /* Primitive Topology                                                   */
     /************************************************************************/
-    m_testTriangleModel.createTriangle( &m_device );
-
+    m_deviceContext.setPrimitiveTopology( PRIMITIVE_TOPOLOGY::kTriangleList );
   }
   
   void 
   dqGraphicsAPIDX::Clean()
   {
-    m_swapChain.Clear();
-    m_vertexShader.Clear();
-    m_pixelShader.Clear();
-    m_backBuffer.Clear();
+    m_swapChain.Clear();   
+    m_backBuffer.clear();
     m_device.clear();
     m_deviceContext.clear();
     m_viewport.Destroy();
   }
 
   void 
-  dqGraphicsAPIDX::AddGeometry()
+  dqGraphicsAPIDX::addGeometry(dqModelDX & model)
   {
+    model.setBuffers(m_deviceContext); 
+    m_modelList.push_back(&model);
   }
 
   void 
   dqGraphicsAPIDX::RenderFrame()
   {
-    LinearColor clearColor(0.0f, 0.0f, 1.0f, 1.0f);
-    m_deviceContext.clearRenderTargetView(m_backBuffer, clearColor);
-
-    m_testTriangleModel.setBuffers( m_deviceContext );
-    m_deviceContext.setPrimitiveTopology();
-    m_deviceContext.draw(3, 0);
+    /************************************************************************/
+    /* Clear                                                                */
+    /************************************************************************/
+    m_deviceContext.clearRenderTargetView(m_backBuffer, m_clearColor);   
+    
+    /************************************************************************/
+    /* Draw                                                                 */
+    /************************************************************************/
+    for (auto model : m_modelList) {
+      if (model != nullptr) {
+        model->draw(m_deviceContext);
+      }
+    }
 
     m_swapChain.Present();
   }
 
-  void 
-  dqGraphicsAPIDX::InitPipeline()
+  void dqGraphicsAPIDX::createAndSetInputLayout(dqVertexShaderDX & vertexShader)
   {
-    //Load and compile the two shaders.
-    m_vertexShader.CompileFromFile(L"shaders.shader", "VShader");
-    m_pixelShader.CompileFromFile(L"shaders.shader", "PShader");
-
-    //Encapsulate both shaders into shaders object.
-    m_device.createVertexShader(m_vertexShader);
-    m_device.createPixelShader(m_pixelShader);
-
-    //Set Shader Objects.
-    m_deviceContext.vsSetShader(m_vertexShader);
-    m_deviceContext.psSetShader(m_pixelShader);
-
     //InputLayout
-    m_device.createInputLayout(m_inputLayout, m_vertexShader);
+    m_device.createInputLayout(m_inputLayout, vertexShader);
     m_deviceContext.setInputLayout(m_inputLayout);
+  }
+
+  dqDeviceDX* 
+  dqGraphicsAPIDX::getDevice()
+  {
+    return &m_device;
   }
 }

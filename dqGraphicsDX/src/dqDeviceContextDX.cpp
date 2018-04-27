@@ -5,7 +5,6 @@
 #include "dqVertexShaderDX.h"
 #include "dqPixelShaderDX.h"
 #include "dqInputLayoutDX.h"
-#include "dqTriangleDX.h"
 
 namespace dqEngineSDK
 {
@@ -19,11 +18,13 @@ namespace dqEngineSDK
   }
 
   void 
-  dqDeviceContextDX::init() {
+  dqDeviceContextDX::init() 
+  {
   }
 
   void 
-  dqDeviceContextDX::clear() {
+  dqDeviceContextDX::clear() 
+  {
     if (m_devCont) {
       m_devCont->Release();
     }
@@ -31,54 +32,35 @@ namespace dqEngineSDK
 
   void 
   dqDeviceContextDX::setRenderTargets(int32 nRenderTargets, 
-                                      dqRenderTargetDX & renderTarget) {
+                                      dqRenderTargetDX & renderTarget) 
+  {
     m_devCont->OMSetRenderTargets(nRenderTargets, 
-                                  renderTarget.GetRTViewReference(), 
+                                  renderTarget.getRTViewReference(), 
                                   nullptr);
   }
 
   void 
   dqDeviceContextDX::setViewport(int32 nViewports, 
-                                 dqViewportDX & viewport) {
+                                 dqViewportDX & viewport) 
+  {
     m_devCont->RSSetViewports(nViewports, viewport.GetPointer());
   }
 
   void 
-  dqDeviceContextDX::vsSetShader(dqVertexShaderDX & vShader) {
-    m_devCont->VSSetShader(vShader.GetPVS(), 0, 0);
+  dqDeviceContextDX::vsSetShader(dqVertexShaderDX & vShader) 
+  {
+    m_devCont->VSSetShader(vShader.getPVS(), 0, 0);
   }
 
   void 
-  dqDeviceContextDX::psSetShader(dqPixelShaderDX & pShader) {
-    m_devCont->PSSetShader(pShader.GetPPS(), 0, 0);
-  }
-
-  void
-  dqDeviceContextDX::mapGeometry(const dqTriangleDX & geometry) {
-    DQ_ASSERT(geometry.GetVBufferPointer() 
-              && "null Vertex Buffer Pointer");
-
-    //Map the Buffer. d3dmsr = D3D Mapped Subresource.
-    D3D11_MAPPED_SUBRESOURCE d3dmsr;
-    memset(&d3dmsr, 0, sizeof(D3D11_MAPPED_SUBRESOURCE));
-
-    m_devCont->Map(geometry.GetVBufferPointer(), 
-                   0, 
-                   D3D11_MAP_WRITE_DISCARD, 
-                   0, 
-                   &d3dmsr);
-
-    //Copy data.
-    memcpy(d3dmsr.pData, 
-           geometry.OurVertices, 
-           sizeof(geometry.OurVertices));
-
-    //UnMap.
-    m_devCont->Unmap(geometry.GetVBufferPointer(), 0);
-  }
+  dqDeviceContextDX::psSetShader(dqPixelShaderDX & pShader) 
+  {
+    m_devCont->PSSetShader(pShader.getPPS(), 0, 0);
+  } 
 
   void 
-  dqDeviceContextDX::setInputLayout(dqInputLayoutDX & iLayout) {
+  dqDeviceContextDX::setInputLayout(dqInputLayoutDX & iLayout) 
+  {
     DQ_ASSERT(iLayout.GetLayoutPointer()
               && "null LayoutPointer.");
 
@@ -99,25 +81,40 @@ namespace dqEngineSDK
   }
 
   void 
-  dqDeviceContextDX::setPrimitiveTopology()
-  {
-    m_devCont->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+  dqDeviceContextDX::setPrimitiveTopology( PRIMITIVE_TOPOLOGY::E topology )
+  {   
+    m_devCont->IASetPrimitiveTopology( primitiveTopologyTraductor(topology) );
   }
 
   void 
-    dqDeviceContextDX::draw(uint32 nVertex, uint32 fVertex) {
+  dqDeviceContextDX::draw(uint32 nVertex, uint32 fVertex) 
+  {
     m_devCont->Draw(nVertex, fVertex);
   }
 
   void 
   dqDeviceContextDX::clearRenderTargetView(dqRenderTargetDX & renderTarget,
-                                           LinearColor & clearColor) {
-    m_devCont->ClearRenderTargetView(renderTarget.GetRTViewPointer(), 
-               reinterpret_cast<float*>(&clearColor));
+                                           LinearColor & clearColor) 
+  {
+    m_devCont->ClearRenderTargetView (renderTarget.getRTViewPointer(), 
+                                      reinterpret_cast<float*>(&clearColor));
   }
 
   ID3D11DeviceContext ** 
-  dqDeviceContextDX::getReference() {
+  dqDeviceContextDX::getReference() 
+  {
     return &m_devCont;
+  }
+
+  D3D_PRIMITIVE_TOPOLOGY
+  dqDeviceContextDX::primitiveTopologyTraductor(PRIMITIVE_TOPOLOGY::E topology)
+  {
+    switch (topology)
+    {
+    case dqEngineSDK::PRIMITIVE_TOPOLOGY::kTriangleList:
+      return D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+    default:
+      return D3D10_PRIMITIVE_TOPOLOGY_UNDEFINED;
+    }
   }
 }

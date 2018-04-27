@@ -1,5 +1,18 @@
 #include "dqModelDX.h"
 
+#include <assimp/cimport.h>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+#include "dqDeviceDX.h"
+#include "dqDeviceContextDX.h"
+#include "dqPlane.h"
+#include "dqMeshDX.h"
+#include "dqPixelShaderDX.h"
+#include "dqVertexShaderDX.h"
+
+
+
 namespace dqEngineSDK
 {
   dqModelDX::dqModelDX()
@@ -16,16 +29,24 @@ namespace dqEngineSDK
   {
   }
 
+  void dqModelDX::draw(dqDeviceContextDX& device)
+  {
+    for (auto mesh : m_meshList) {      
+      if (mesh != nullptr) {
+        mesh->draw(device);        
+      }
+    }
+
+  }
+
   void 
   dqModelDX::setBuffers(dqDeviceContextDX & context)
   {
-    if (m_meshList.empty())
-    {
+    if (m_meshList.empty()) {
       return;
     }
 
-    for (auto mesh : m_meshList)
-    {
+    for (auto mesh : m_meshList) {
       mesh->setBuffers(context);
     }
     return;
@@ -42,10 +63,44 @@ namespace dqEngineSDK
     m_meshList.push_back(pMesh);
     return;
   }
+
+  void dqModelDX::addVertexShader(dqVertexShaderDX * pVertexShader)
+  {
+    for (auto mesh : m_meshList) {
+      mesh->setMaterialVertexShader(pVertexShader);
+    }
+  }
+
+  void dqModelDX::addPixelShader(dqPixelShaderDX * pPixelShader)
+  {
+    for (auto mesh : m_meshList) {
+      mesh->setMaterialPixelShader(pPixelShader);
+    }
+  }
+
+  void dqModelDX::loadModelFromFile(String modelPath)
+  {
+    /************************************************************************/
+    /* Load Scene                                                           */
+    /************************************************************************/
+    const aiScene* scene = aiImportFile(modelPath,
+                           aiProcessPreset_TargetRealtime_MaxQuality);
+  
+    if (scene == nullptr) {
+      //Error.
+      return;
+    }
+
+    /************************************************************************/
+    /* Release Scene                                                        */
+    /************************************************************************/
+    aiReleaseImport(scene);
+  }
   
   void 
   dqModelDX::createPlane(dqPlane * plane, int32 divX, int32 divY)
   {
+    //TODO: Create planes
   }
   
   void 

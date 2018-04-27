@@ -15,6 +15,8 @@
 #include <dqPlatformTypes.h>
 #include <dqSTDHeaders.h>
 
+#include "dqGraphicsCommons.h"
+
 /************************************************************************/
 /* General Defines                                                      */
 /************************************************************************/

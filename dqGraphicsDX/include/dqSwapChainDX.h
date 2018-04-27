@@ -10,10 +10,17 @@ namespace dqEngineSDK
     dqSwapChainDX();
     ~dqSwapChainDX();
 
-    void Init();
-    void Clear();
-    void GetBuffer(dqRenderTargetDX &);
-    void Present();
+    void 
+    Init();
+    
+    void 
+    Clear();
+    
+    void 
+    GetBuffer(dqRenderTargetDX &);
+    
+    void 
+    Present();
 
     IDXGISwapChain ** GetReference();
 

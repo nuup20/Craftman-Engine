@@ -3,7 +3,6 @@
 #include "dqRenderTargetDX.h"
 #include "dqVertexShaderDX.h"
 #include "dqPixelShaderDX.h"
-#include "dqTriangleDX.h"
 #include "dqInputLayoutDX.h"
 
 namespace dqEngineSDK
@@ -11,72 +10,79 @@ namespace dqEngineSDK
   dqDeviceDX::dqDeviceDX()
   {
   }
+
   dqDeviceDX::~dqDeviceDX()
   {
     this->clear();
   }
+
   void dqDeviceDX::init()
   {
 
   }
+
   void dqDeviceDX::clear()
   {
-    if (m_device)
-    {
+    if (m_device) {
       m_device->Release();
     }
     return;
   }
-  void dqDeviceDX::createRenderTargetView(dqRenderTargetDX & renderTarget)
+
+  void 
+  dqDeviceDX::createRenderTargetView(dqRenderTargetDX & renderTarget)
   {
-    m_device->CreateRenderTargetView(renderTarget.GetPointer(), 
-                                     NULL, 
-                                     renderTarget.GetRTViewReference());
+    m_device->CreateRenderTargetView(renderTarget.getPointer(), 
+                                     nullptr, 
+                                     renderTarget.getRTViewReference());
     return;
   }
-  void dqDeviceDX::createVertexShader(dqVertexShaderDX & vShader)
+
+  void 
+  dqDeviceDX::createVertexShader(dqVertexShaderDX & vShader)
   {
-     m_device->CreateVertexShader(vShader.GetBufferPointer(), 
-                                  vShader.GetBufferSize(), 
-                                  NULL, 
-                                  vShader.GetPVSReference());
+     m_device->CreateVertexShader(vShader.getBufferPointer(), 
+                                  vShader.getBufferSize(), 
+                                  nullptr, 
+                                  vShader.getPVSReference());
     return;
   }
-  void dqDeviceDX::createPixelShader(dqPixelShaderDX & pShader)
+
+  void 
+  dqDeviceDX::createPixelShader(dqPixelShaderDX & pShader)
   {
-    m_device->CreatePixelShader(pShader.GetBufferPointer(), 
-                                pShader.GetBufferSize(),
-                                NULL, 
-                                pShader.GetPPSReference());
+    m_device->CreatePixelShader(pShader.getBufferPointer(), 
+                                pShader.getBufferSize(),
+                                nullptr, 
+                                pShader.getPPSReference());
     return;
   }
 
   HRESULT 
-  dqDeviceDX::createBuffer(
-                            D3D11_BUFFER_DESC *      descriptor,
-                            D3D11_SUBRESOURCE_DATA * subresource,
-                            ID3D11Buffer **          buffer
-                          )
+  dqDeviceDX::createBuffer(D3D11_BUFFER_DESC*      descriptor,
+                           D3D11_SUBRESOURCE_DATA* subresource,
+                           ID3D11Buffer**          buffer)
   {
     HRESULT hr;
-    hr = m_device->CreateBuffer(  
-                                descriptor,
+    hr = m_device->CreateBuffer(descriptor,
                                 subresource,
-                                buffer
-                               );
+                                buffer);
     return hr;
   }
   
-  void dqDeviceDX::createInputLayout(dqInputLayoutDX & iLayout, dqVertexShaderDX & vShader)
+  void 
+  dqDeviceDX::createInputLayout(dqInputLayoutDX& iLayout, 
+                                dqVertexShaderDX& vShader)
   {
    m_device->CreateInputLayout(iLayout.ied, 
                                2, 
-                               vShader.GetBlobPointer()->GetBufferPointer(),
-                               vShader.GetBlobPointer()->GetBufferSize(),
+                               vShader.getBlobPointer()->GetBufferPointer(),
+                               vShader.getBlobPointer()->GetBufferSize(),
                                iLayout.GetLayoutReference());
     return;
   }
-  ID3D11Device ** dqDeviceDX::getReference()
+
+  ID3D11Device** dqDeviceDX::getReference()
   {
     return &m_device;
   }

@@ -11,15 +11,15 @@ namespace dqEngineSDK
     dqShaderDX();
     virtual ~dqShaderDX();
 
-    virtual void Clear() = 0;
+    virtual void clear() = 0;
 
-    virtual void  CompileFromFile(const WString& file, const String& funcName) = 0;
-    ID3D10Blob *  GetBlobPointer();
-    ID3D10Blob ** GetBlobReference();
-    void*         GetBufferPointer();
-    SIZE_T        GetBufferSize();
+    virtual void  compileFromFile(const WString& file, const String& funcName) = 0;
+    ID3D10Blob*   getBlobPointer();
+    ID3D10Blob**  getBlobReference();
+    void*         getBufferPointer();
+    SIZE_T        getBufferSize();
 
   protected:
-    ID3D10Blob * m_blob;
+    ID3D10Blob* m_blob;
   };
 }

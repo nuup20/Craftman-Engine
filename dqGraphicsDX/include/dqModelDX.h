@@ -1,10 +1,16 @@
 #pragma once
 #include "dqGraphicsDXPrerequisites.h"
-#include "dqPlane.h"
-#include "dqMeshDX.h"
 
 namespace dqEngineSDK 
 {
+  class dqDeviceContextDX;
+  class dqDeviceDX;
+  class dqMeshDX;
+  class dqPlane;
+  class dqMaterialDX;
+  class dqVertexShaderDX;
+  class dqPixelShaderDX;
+
   class DQ_GRAPHICSDX_EXPORT dqModelDX
   {
   public:
@@ -13,19 +19,35 @@ namespace dqEngineSDK
 
     void 
     init();
+
+    void
+    draw(dqDeviceContextDX& device);
+
     void 
-    setBuffers(dqDeviceContextDX & context);
+    setBuffers( dqDeviceContextDX& context );
+    
     void 
     destroy();
 
     void 
-    addMesh( dqMeshDX * pMesh );
+    addMesh( dqMeshDX* pMesh );
+
+    void
+      addVertexShader(dqVertexShaderDX* pVertexShader);
+
+    void
+      addPixelShader(dqPixelShaderDX* pPixelShader);
+    
+    void
+      loadModelFromFile(String modelPath);
+
     void 
-    createPlane( dqPlane * plane, int32 divX, int32 divY );
+    createPlane( dqPlane* plane, int32 divX, int32 divY );
+    
     void 
-    createTriangle(dqDeviceDX * device );
+    createTriangle( dqDeviceDX* device );
 
   private:
-    Vector< dqMeshDX * > m_meshList;
+    Vector< dqMeshDX* > m_meshList;
   };
 }

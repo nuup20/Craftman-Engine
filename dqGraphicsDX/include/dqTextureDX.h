@@ -10,14 +10,20 @@ namespace dqEngineSDK
     dqTextureDX(const dqTextureDX&);
     virtual ~dqTextureDX();
 
-    virtual void Init();
-    virtual void Clear();
+    virtual void 
+    init();
+    
+    virtual void 
+    clear();
 
-    ID3D11Texture2D ** GetReference();
-    ID3D11Texture2D *  GetPointer() ;
+    ID3D11Texture2D** 
+    getReference();
+    
+    ID3D11Texture2D*  
+    getPointer() ;
 
   protected:
-    ID3D11Texture2D * m_texture2D;
+    ID3D11Texture2D* m_texture2D;
   };
 
 }

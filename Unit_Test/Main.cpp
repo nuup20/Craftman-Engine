@@ -7,6 +7,7 @@
 
 #include <dqGraphicsDXPrerequisites.h>
 #include <dqGraphicsAPIDX.h>
+#include <dqModelDX.h>
 
 /*============================================================================*/
 /* Prototypes                                                                 */
@@ -55,11 +56,44 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
   ShowWindow(hWnd, windowStyle);
 
-  //InitApi
-  dqEngineSDK::dqGraphicsAPIDX apiDX;
-  apiDX.Init(&hWnd, dqEngineSDK::dqWindowMode::kWindowed, dqEngineSDK::dqColorFormat::k_R8G8B8A8_UNFORM);
+  /************************************************************************/
+  /* Init Graphics API                                                    */
+  /************************************************************************/
+  dqEngineSDK::dqGraphicsAPIDX graphicsAPI;
+  graphicsAPI.Init(&hWnd, 
+             dqEngineSDK::dqWindowMode::kWindowed, 
+             dqEngineSDK::dqColorFormat::k_R8G8B8A8_UNFORM);
 
-  // enter the main loop:
+  /************************************************************************/
+  /* Create Shaders                                                       */
+  /************************************************************************/
+  dqEngineSDK::dqVertexShaderDX vertexShader;
+  dqEngineSDK::dqPixelShaderDX pixelShader;
+
+  vertexShader.create(L"shaders.shader", "VShader", *graphicsAPI.getDevice());
+  pixelShader.create(L"shaders.shader", "PShader", *graphicsAPI.getDevice());
+
+  /************************************************************************/
+  /* Set Input Layout                                                     */
+  /************************************************************************/
+  graphicsAPI.createAndSetInputLayout(vertexShader);
+
+  /************************************************************************/
+  /* Triangle                                                             */
+  /************************************************************************/
+  dqEngineSDK::dqModelDX triangle;
+  triangle.createTriangle(graphicsAPI.getDevice());
+  
+  //Add Shaders
+  triangle.addPixelShader(&pixelShader);
+  triangle.addVertexShader(&vertexShader);
+
+  //Add Geometry
+  graphicsAPI.addGeometry(triangle);
+
+  /************************************************************************/
+  /* APP Loop                                                             */
+  /************************************************************************/
   MSG msg;
   while (1)
   {
@@ -73,11 +107,20 @@ int WINAPI WinMain(HINSTANCE hInstance,
     }
 
     //Render Frame
-    apiDX.RenderFrame();
+    graphicsAPI.RenderFrame();
   }
 
-  // clean up DirectX and COM
-  apiDX.Clean();
+  /************************************************************************/
+  /* Clean API                                                            */
+  /************************************************************************/
+  graphicsAPI.Clean();
+
+  /************************************************************************/
+  /* Clean Shaders                                                        */
+  /************************************************************************/
+  vertexShader.clear();
+  pixelShader.clear();
+
   return msg.wParam;
 }
 

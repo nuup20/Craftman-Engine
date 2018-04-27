@@ -11,6 +11,9 @@ namespace dqEngineSDK
     public dqGraphicsBufferDX
   {
   public:
+    dqVertexBufferDX();
+    ~dqVertexBufferDX();
+
     void      
     init();
     
@@ -18,17 +21,13 @@ namespace dqEngineSDK
     destroy();
     
     HRESULT   
-    create( dqDeviceDX * pd3dDevice, Vector < T >  & vertexList );
+    create( dqDeviceDX* pd3dDevice, Vector < T >  & vertexList );
     
     void      
     setBuffer(dqDeviceContextDX contextDev);
 
-    dqVertexBufferDX();
-    ~dqVertexBufferDX();
-
   private:
-    ID3D11Buffer *          m_pVertexBuffer;    
-    Vector< T >             m_vertexList;
+    ID3D11Buffer * m_pVertexBuffer;   
   };  
 
   template<typename T>
@@ -53,14 +52,7 @@ namespace dqEngineSDK
   template<typename T>
   inline void 
   dqVertexBufferDX<T>::destroy()
-  {
-    /************************************************************************/
-    /* Clear and Destroy VertexList                                         */
-    /************************************************************************/
-    if (!m_vertexList.empty())
-    {
-      m_vertexList.clear();      
-    }
+  {   
   }
 
   template < typename T >
@@ -69,33 +61,24 @@ namespace dqEngineSDK
                                Vector < T > &   vertexList )
   {
     /************************************************************************/
-    /* Copy Vertices                                                        */
-    /************************************************************************/
-    if (!m_vertexList.empty())
-    {
-      m_vertexList.clear();
-    }    
-    m_vertexList = vertexList;
-
-    /************************************************************************/
     /* Buffer Description                                                   */
     /************************************************************************/
     D3D11_BUFFER_DESC bufferDesc;
     SecureZeroMemory(&bufferDesc, sizeof(bufferDesc));
 
-    bufferDesc.Usage =            D3D11_USAGE_DEFAULT;
-    bufferDesc.ByteWidth =        sizeof( T ) * m_vertexList.size();
-    bufferDesc.BindFlags =        D3D11_BIND_VERTEX_BUFFER;
-    bufferDesc.CPUAccessFlags =   0;
-    bufferDesc.MiscFlags =        0;
+    bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+    bufferDesc.ByteWidth = sizeof( T ) * vertexList.size();
+    bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+    bufferDesc.CPUAccessFlags = 0;
+    bufferDesc.MiscFlags = 0;
 
     /************************************************************************/
     /* Sub Resource Data                                                    */
     /************************************************************************/
-    D3D11_SUBRESOURCE_DATA        initData;
-    initData.pSysMem =            &m_vertexList;
-    initData.SysMemPitch =        0;
-    initData.SysMemSlicePitch =   0;
+    D3D11_SUBRESOURCE_DATA initData;
+    initData.pSysMem = &vertexList[0];
+    initData.SysMemPitch = 0;
+    initData.SysMemSlicePitch = 0;
 
     /************************************************************************/
     /* Vertex Buffer Creation                                               */

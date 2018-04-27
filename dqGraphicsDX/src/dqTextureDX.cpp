@@ -6,25 +6,35 @@ namespace dqEngineSDK
   dqTextureDX::dqTextureDX()
   {
   }
+
   dqTextureDX::dqTextureDX(const dqTextureDX & texture)
   {
     m_texture2D = texture.m_texture2D;
   }
+
   dqTextureDX::~dqTextureDX()
   {
   }
-  void dqTextureDX::Init()
+
+  void 
+  dqTextureDX::init()
   {
   }
-  void dqTextureDX::Clear()
+  
+  void 
+  dqTextureDX::clear()
   {
     m_texture2D->Release();
   }
-  ID3D11Texture2D ** dqTextureDX::GetReference()
+  
+  ID3D11Texture2D** 
+  dqTextureDX::getReference()
   {
     return &m_texture2D;
   }
-  ID3D11Texture2D * dqTextureDX::GetPointer() 
+  
+  ID3D11Texture2D* 
+  dqTextureDX::getPointer() 
   {
     return m_texture2D;
   }
