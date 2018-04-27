@@ -93,7 +93,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)dqUtility/include/;$(SolutionDir)assimp/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/;$(SolutionDir)dqUtility/include/;$(SolutionDir)External_Libraries/assimp/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PreprocessorDefinitions>DQ_GRAPHICSDX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp14</LanguageStandard>
@@ -102,8 +102,8 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>NotSet</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d11.lib;dxguid.lib;d3dcompiler.lib;dqUtilityd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/;$(SolutionDir)External_Libraries\assimp\lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;dxguid.lib;d3dcompiler.lib;dqUtilityd.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)/Lib/$(PlatformTarget)/$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -113,7 +113,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)dqUtility/include/;$(SolutionDir)assimp/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/;$(SolutionDir)dqUtility/include/;$(SolutionDir)External_Libraries/assimp/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PreprocessorDefinitions>DQ_GRAPHICSDX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp14</LanguageStandard>
@@ -122,8 +122,8 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>NotSet</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d11.lib;dxguid.lib;d3dcompiler.lib;dqUtilityd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/;$(SolutionDir)External_Libraries\assimp\lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;dxguid.lib;d3dcompiler.lib;dqUtilityd.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)/Lib/$(PlatformTarget)/$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -186,6 +186,7 @@
     <ClCompile Include="src\dqMaterialDX.cpp" />
     <ClCompile Include="src\dqMeshDX.cpp" />
     <ClCompile Include="src\dqModelDX.cpp" />
+    <ClCompile Include="src\dqModelLoader.cpp" />
     <ClCompile Include="src\dqPixelShaderDX.cpp" />
     <ClCompile Include="src\dqRenderTargetDX.cpp" />
     <ClCompile Include="src\dqShaderDX.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="include\dqMaterialDX.h" />
     <ClInclude Include="include\dqMeshDX.h" />
     <ClInclude Include="include\dqModelDX.h" />
+    <ClInclude Include="include\dqModelLoader.h" />
     <ClInclude Include="include\dqPixelShaderDX.h" />
     <ClInclude Include="include\dqRenderTargetDX.h" />
     <ClInclude Include="include\dqShaderDX.h" />

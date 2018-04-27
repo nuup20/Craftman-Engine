@@ -93,6 +93,9 @@
     <ClCompile Include="src\dqConstantBufferDX.cpp">
       <Filter>Source Files\Buffers</Filter>
     </ClCompile>
+    <ClCompile Include="src\dqModelLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\dqDeviceContextDX.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="include\dqInfoCollector.h">
       <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="include\dqModelLoader.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
