@@ -77,7 +77,14 @@ namespace dqEngineSDK
                                   numBuffers,
                                   vertexBuffer,
                                   &stride, 
-                                  &offset);   
+                                  &offset);
+  }
+
+  void 
+  dqDeviceContextDX::setIndexBuffers(ID3D11Buffer * buffer, uint32 offset)
+  {
+    m_devCont->IASetIndexBuffer(buffer, DXGI_FORMAT_R32_UINT, offset);
+    return;
   }
 
   void 

@@ -91,6 +91,9 @@ namespace dqEngineSDK
                      uint32,
                      uint32);
     
+    void
+    setIndexBuffers(ID3D11Buffer* buffer,
+                    uint32 offset);
     /*
     *  @brief Set a primitive Topology.
     */

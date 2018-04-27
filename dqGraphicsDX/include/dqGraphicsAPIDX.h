@@ -13,6 +13,7 @@
 #include "dqColor.h"
 #include "dqModelDX.h"
 #include "dqInfoCollector.h"
+#include "dqModelLoader.h"
 
 namespace dqEngineSDK
 {
@@ -44,6 +45,9 @@ namespace dqEngineSDK
     
     void 
     Clean();
+
+    void
+    LoadModelFromFile(dqModelDX& model, String filePath);
     
     void 
     addGeometry(dqModelDX & model);
@@ -68,6 +72,7 @@ namespace dqEngineSDK
     LinearColor           m_clearColor;
     Vector < dqModelDX* > m_modelList;
 
+    dqModelLoader         m_modelLoader;
     dqInfoCollector       m_infoCollector;
   };
 }

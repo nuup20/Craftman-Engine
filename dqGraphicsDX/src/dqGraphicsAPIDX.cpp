@@ -109,7 +109,7 @@ namespace dqEngineSDK
     /************************************************************************/
     /* Primitive Topology                                                   */
     /************************************************************************/
-    m_deviceContext.setPrimitiveTopology( PRIMITIVE_TOPOLOGY::kTriangleList );
+    m_deviceContext.setPrimitiveTopology( PRIMITIVE_TOPOLOGY::kUndefinded );
   }
   
   void 
@@ -120,6 +120,13 @@ namespace dqEngineSDK
     m_device.clear();
     m_deviceContext.clear();
     m_viewport.Destroy();
+  }
+
+  void 
+  dqGraphicsAPIDX::LoadModelFromFile(dqModelDX & model, String filePath)
+  {
+    m_modelLoader.loadModel(m_device, model, filePath);
+    return;
   }
 
   void 

@@ -89,7 +89,20 @@ int WINAPI WinMain(HINSTANCE hInstance,
   triangle.addVertexShader(&vertexShader);
 
   //Add Geometry
-  graphicsAPI.addGeometry(triangle);
+  //graphicsAPI.addGeometry(triangle);
+
+  /************************************************************************/
+  /* Triangle                                                             */
+  /************************************************************************/
+  dqEngineSDK::dqModelDX spaceShip;
+  graphicsAPI.LoadModelFromFile(spaceShip, "Nave_low_v1.fbx");
+
+  //Add Shaders
+  spaceShip.addPixelShader(&pixelShader);
+  spaceShip.addVertexShader(&vertexShader);
+
+  //Add Geometry
+  graphicsAPI.addGeometry(spaceShip);
 
   /************************************************************************/
   /* APP Loop                                                             */

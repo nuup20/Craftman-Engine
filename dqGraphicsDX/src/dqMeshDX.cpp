@@ -36,7 +36,7 @@ namespace dqEngineSDK
     /* Set IB and VB                                                        */
     /************************************************************************/
     m_vertexBuffer.setBuffer(context);
-    //TODO: set IB;
+    m_indexBuffer.setBuffers(context);
   }
 
   void 

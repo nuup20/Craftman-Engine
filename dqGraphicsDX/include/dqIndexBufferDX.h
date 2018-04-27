@@ -1,6 +1,7 @@
 #pragma once
 #include "dqGraphicsBufferDX.h"
 #include "dqDeviceDX.h"
+#include "dqDeviceContextDX.h"
 
 namespace dqEngineSDK
 {
@@ -20,6 +21,9 @@ namespace dqEngineSDK
     
     HRESULT   
     create( dqDeviceDX* pd3dDevice, Vector < T >& pIndices );
+
+    void
+    setBuffers(dqDeviceContextDX context);
     
   private:
     ID3D11Buffer* m_pIndexBuffer; 
@@ -88,6 +92,24 @@ namespace dqEngineSDK
 
     hr = pd3dDevice->createBuffer(&bufferDesc, &initData, &m_pIndexBuffer);
     return hr;
-  } 
+  }
+
+  template<typename T>
+  inline void 
+  dqIndexBufferDX<T>::setBuffers(dqDeviceContextDX context)
+  {
+    /************************************************************************/
+    /* Set Index Buffers                                                   */
+    /************************************************************************/
+    if (!m_pIndexBuffer)
+    {
+      return;
+    }
+
+    uint32 offset = 0;
+    context.setIndexBuffers(m_pIndexBuffer, offset);
+    return;
+  }
+
 }
 
