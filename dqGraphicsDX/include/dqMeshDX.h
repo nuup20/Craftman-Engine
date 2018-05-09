@@ -40,6 +40,7 @@ namespace dqEngineSDK
     uint32  m_initPosition;
     uint32  m_finalPosition;
     uint32  m_vertexCount;
+    uint32  m_indicesCount;
 
     dqMaterialDX                    m_material;
     dqIndexBufferDX   <uint32>      m_indexBuffer;

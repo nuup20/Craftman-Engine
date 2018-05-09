@@ -24,7 +24,7 @@ namespace dqEngineSDK
     create( dqDeviceDX* pd3dDevice, Vector < T >  & vertexList );
     
     void      
-    setBuffer(dqDeviceContextDX contextDev);
+    setBuffer(dqDeviceContextDX& contextDev);
 
   private:
     ID3D11Buffer * m_pVertexBuffer;   
@@ -91,7 +91,7 @@ namespace dqEngineSDK
   
   template<typename T>
   inline void 
-  dqVertexBufferDX<T>::setBuffer(dqDeviceContextDX contextDev)
+  dqVertexBufferDX<T>::setBuffer(dqDeviceContextDX& contextDev)
   {
     /************************************************************************/
     /* Set Vertex Buffers                                                   */

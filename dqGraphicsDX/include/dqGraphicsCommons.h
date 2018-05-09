@@ -5,7 +5,8 @@ namespace dqEngineSDK
   namespace PRIMITIVE_TOPOLOGY {
     enum E {
       kUndefinded,
-      kTriangleList
+      kTriangleList,
+      kPointList
     };
   }
 

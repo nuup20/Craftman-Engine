@@ -9,6 +9,12 @@
 #include <dqGraphicsAPIDX.h>
 #include <dqModelDX.h>
 
+#include <dqCamera.h>
+
+#include <SFML/Window.hpp>
+
+using sf::Keyboard;
+
 /*============================================================================*/
 /* Prototypes                                                                 */
 /*============================================================================*/
@@ -105,6 +111,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
   graphicsAPI.addGeometry(spaceShip);
 
   /************************************************************************/
+  /* Camera                                                               */
+  /************************************************************************/
+
+
+
+  /************************************************************************/
   /* APP Loop                                                             */
   /************************************************************************/
   MSG msg;
@@ -117,6 +129,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
       if (msg.message == WM_QUIT)
         break;
+    }
+
+    /************************************************************************/
+    /* SFML INPUT                                                           */
+    /************************************************************************/
+    if (Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+     
     }
 
     //Render Frame
@@ -150,8 +169,12 @@ LRESULT CALLBACK WindowProc(HWND hWnd,
     PostQuitMessage(0);
     return 0;
   } break;
+
+  default:
+      return DefWindowProc(hWnd, message, wParam, lParam);
+    break;
   }
 
-  return DefWindowProc(hWnd, message, wParam, lParam);
+  return 0;
 }
 

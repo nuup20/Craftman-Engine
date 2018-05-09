@@ -23,7 +23,7 @@ namespace dqEngineSDK
     create( dqDeviceDX* pd3dDevice, Vector < T >& pIndices );
 
     void
-    setBuffers(dqDeviceContextDX context);
+    setBuffers(dqDeviceContextDX& context);
     
   private:
     ID3D11Buffer* m_pIndexBuffer; 
@@ -96,7 +96,7 @@ namespace dqEngineSDK
 
   template<typename T>
   inline void 
-  dqIndexBufferDX<T>::setBuffers(dqDeviceContextDX context)
+  dqIndexBufferDX<T>::setBuffers(dqDeviceContextDX& context)
   {
     /************************************************************************/
     /* Set Index Buffers                                                   */

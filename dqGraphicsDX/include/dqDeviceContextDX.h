@@ -108,6 +108,11 @@ namespace dqEngineSDK
     void
     draw(uint32 nVertex, uint32 fVertex);
     
+    void
+      drawIndexed(uint32 numIndices,
+                  uint32 startPosition,
+                  uint32 baseVertexLocation);
+
     /**
      * @brief Clear a renderTarger with a color.
      * @param Render target to clear.

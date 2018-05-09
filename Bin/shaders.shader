@@ -7,7 +7,7 @@ struct VOut
 VOut VShader(float3 position : POSITION0, float4 color : COLOR0)
 {
     VOut output;
-
+    
     output.position = float4(position, 1);
     output.color = color;
 

@@ -26,7 +26,7 @@ namespace dqEngineSDK
     /* Set Vertex & Pixel Shader                                            */
     /************************************************************************/
     m_material.setShaders(context);
-    context.draw(m_vertexCount, 0);
+    context.drawIndexed(m_indicesCount, 0, 0);
   }
   
   void 
@@ -58,6 +58,7 @@ namespace dqEngineSDK
     HRESULT hr;
 
     m_vertexCount = (uint32)vertices.size();
+    m_indicesCount = indices.size();
 
     /************************************************************************/
     /* Create VertexBuffer                                                  */

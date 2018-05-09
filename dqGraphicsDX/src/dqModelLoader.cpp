@@ -67,13 +67,15 @@ namespace dqEngineSDK
       aiMesh* pAssimpMesh = scene->mMeshes[meshIdx];
       dqMeshDX* pNewMesh = new dqMeshDX();
 
+      dqVertexDX vertex;
+      vertices.reserve(pAssimpMesh->mNumVertices);
+
       /************************************************************************/
-      /* Load Vertices                                                                     */
+      /* Load Vertices                                                        */
       /************************************************************************/
       for (uint32 vertexIdx = 0; vertexIdx < pAssimpMesh->mNumVertices; ++vertexIdx) {
         
-        aiVector3D assimpVertex = pAssimpMesh->mVertices[vertexIdx];
-        dqVertexDX vertex;
+        aiVector3D& assimpVertex = pAssimpMesh->mVertices[vertexIdx];        
 
         vertex.x = assimpVertex.x;
         vertex.y = assimpVertex.y;
@@ -92,6 +94,7 @@ namespace dqEngineSDK
       /* Load Indices                                                         */
       /************************************************************************/
       uint32 numIndices = 0;
+      indices.reserve(pAssimpMesh->mNumFaces * 3);
       for (uint32 faceIdx = 0; faceIdx < pAssimpMesh->mNumFaces; ++faceIdx) {
         
         numIndices = pAssimpMesh->mFaces[faceIdx].mNumIndices;

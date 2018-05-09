@@ -24,7 +24,9 @@ namespace dqEngineSDK
   void 
   dqRenderTargetDX::clear()
   {
-    m_texture2D->Release();
+    if (m_texture2D) {
+      m_texture2D->Release();
+    }
   }
 
   ID3D11RenderTargetView** 

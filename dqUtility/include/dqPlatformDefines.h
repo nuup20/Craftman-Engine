@@ -236,3 +236,7 @@
 # define DQ_DEBUG_ONLY(x)
 # define DQ_ASSERT(x)
 #endif
+
+#if DQ_COMPILER == DQ_COMPILER_MSVC
+# define _CRT_SECURE_NO_WARNINGS
+#endif

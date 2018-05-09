@@ -109,7 +109,7 @@ namespace dqEngineSDK
     /************************************************************************/
     /* Primitive Topology                                                   */
     /************************************************************************/
-    m_deviceContext.setPrimitiveTopology( PRIMITIVE_TOPOLOGY::kUndefinded );
+    m_deviceContext.setPrimitiveTopology( PRIMITIVE_TOPOLOGY::kTriangleList );
   }
   
   void 
@@ -132,6 +132,7 @@ namespace dqEngineSDK
   void 
   dqGraphicsAPIDX::addGeometry(dqModelDX & model)
   {
+    //TODO llamar cuando se hace el render.
     model.setBuffers(m_deviceContext); 
     m_modelList.push_back(&model);
   }
