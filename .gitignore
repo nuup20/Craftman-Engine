@@ -9,3 +9,5 @@ dqTestApp/
 
 .vs
 
+*.ipch
+*.db
