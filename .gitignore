@@ -3,4 +3,9 @@ Resources/
 Bin/
 dqTestApp/
 
-*.ipch
+# VS2017 and VSCode config files.
+
+.vscode
+
+.vs
+
