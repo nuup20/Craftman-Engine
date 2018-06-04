@@ -3,4 +3,4 @@ Resources/
 Bin/
 dqTestApp/
 
-.ipch
+*.ipch
