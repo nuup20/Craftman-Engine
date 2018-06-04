@@ -25,7 +25,10 @@ namespace dqEngineSDK
 
     #endif
 
-    D3DCompileFromFile( fileDirectory.c_str(),
+    m_blob = nullptr;
+    ID3D10Blob* pError = nullptr;
+
+    HRESULT hr = D3DCompileFromFile( fileDirectory.c_str(),
                         nullptr,
                         nullptr,
                         functionName.c_str(),
@@ -33,8 +36,16 @@ namespace dqEngineSDK
                         flags,
                         0,
                         &m_blob,
-                        nullptr );
+                        &pError);
 
+    if (FAILED(hr))
+    {
+      char* pErr = (char*)pError->GetBufferPointer();
+      String texto;
+      texto.resize(pError->GetBufferSize());
+      memcpy(&texto[0], pErr, pError->GetBufferSize());
+      pError->Release();
+    }
 
     //Encapsulate shader
     device.createVertexShader(*this);  

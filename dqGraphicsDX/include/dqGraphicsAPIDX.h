@@ -61,6 +61,11 @@ namespace dqEngineSDK
     dqDeviceDX *
     getDevice();
 
+    dqDeviceContextDX *
+    getDeviceContext() {
+      return &m_deviceContext;
+    }
+
   private:
     dqDeviceDX            m_device;
     dqDeviceContextDX     m_deviceContext;

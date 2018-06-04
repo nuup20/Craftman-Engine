@@ -14,6 +14,8 @@
    return pi * 4.0f;
 }
 
+#include "dqPlane.h"
+
 namespace dqEngineSDK
 {
   /************************************************************************/

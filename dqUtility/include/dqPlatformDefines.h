@@ -239,4 +239,5 @@
 
 #if DQ_COMPILER == DQ_COMPILER_MSVC
 # define _CRT_SECURE_NO_WARNINGS
+# pragma warning(disable : 4251)
 #endif

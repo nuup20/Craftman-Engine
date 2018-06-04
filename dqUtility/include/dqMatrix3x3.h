@@ -22,16 +22,44 @@ namespace dqEngineSDK
     Matrix3x3(const Matrix3x3&);
     ~Matrix3x3();
 
-    Matrix3x3   operator+ (const Matrix3x3&) const;
-    Matrix3x3   operator- (const Matrix3x3&) const;
-    Matrix3x3   operator* (const Matrix3x3&) const;
-    Vector3     operator* (const Vector3&) const;
-    Matrix3x3&  operator+= (const Matrix3x3&);
-    Matrix3x3&  operator-= (const Matrix3x3&);
-    Matrix3x3&  operator*= (const Matrix3x3&);
+    Matrix3x3   
+      operator+ (const Matrix3x3&) const;
+    
+    Matrix3x3   
+      operator- (const Matrix3x3&) const;
+    
+    Matrix3x3   
+      operator* (const Matrix3x3&) const;
+    
+    Vector3     
+      operator* (const Vector3&) const;
+    
+    Matrix3x3&  
+      operator+= (const Matrix3x3&);
+    
+    Matrix3x3&  
+      operator-= (const Matrix3x3&);
+    
+    Matrix3x3&  
+      operator*= (const Matrix3x3&);
+    
+    Matrix3x3&  
+      operator= (const Matrix3x3&);
+    
+    Matrix3x3&  
+      operator= (const float);
 
-    Matrix3x3   Transposed() const; 
-    Matrix3x3&  Transpose();
+    Matrix3x3   
+      Transposed() const; 
+    
+    Matrix3x3&  
+      Transpose();
+    
+    /**
+    * @brief Convierte la matrix original en una matriz identidad.
+    */
+    Matrix3x3&
+      identityMatrix();
 
     static const int8 RANGE_MATRIX = 3;
   };

@@ -35,6 +35,8 @@ namespace dqEngineSDK
     Vector3&  operator/= (const Vector3&);    
     Vector3&  operator/= (const float&);
     Vector3&  operator^= (const Vector3&);
+    Vector3&  operator= (const Vector3& _vector);
+    Vector3&  operator= (const float& number);
     
     Vector3   Normalized() const;
     float     Magnitude() const;

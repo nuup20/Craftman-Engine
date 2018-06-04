@@ -25,6 +25,7 @@
     <ClInclude Include="include\dqMath.h" />
     <ClInclude Include="include\dqMatrix3x3.h" />
     <ClInclude Include="include\dqMatrix4x4.h" />
+    <ClInclude Include="include\dqModule.h" />
     <ClInclude Include="include\dqPlane.h" />
     <ClInclude Include="include\dqPlatformDefines.h" />
     <ClInclude Include="include\dqPlatformMath.h" />
@@ -45,6 +46,7 @@
     <ClCompile Include="src\dqMath.cpp" />
     <ClCompile Include="src\dqMatrix3x3.cpp" />
     <ClCompile Include="src\dqMatrix4x4.cpp" />
+    <ClCompile Include="src\dqModule.cpp" />
     <ClCompile Include="src\dqPlane.cpp" />
     <ClCompile Include="src\dqPlatformMath.cpp" />
     <ClCompile Include="src\dqQuaternion.cpp" />

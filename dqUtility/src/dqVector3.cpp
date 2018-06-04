@@ -11,10 +11,11 @@ namespace dqEngineSDK
 {
   Vector3::Vector3()
   {
+    *this = 0.0f;
   }
   Vector3::Vector3(DEF_INIT::E)
   {
-    //TODO: Hago una evaluación primero, o una igualación.
+    
   }
   Vector3::Vector3(const Vector3 & vec)
   {
@@ -35,15 +36,21 @@ namespace dqEngineSDK
   Vector3::~Vector3()
   {
   }
-  Vector3 Vector3::operator+(const Vector3 & vec) const
+
+  Vector3 
+    Vector3::operator+(const Vector3 & vec) const
   {
     return Vector3(this->x + vec.x, this->y + vec.y, this->z + vec.z);
   }
-  Vector3 Vector3::operator-(const Vector3 & vec) const
+
+  Vector3 
+    Vector3::operator-(const Vector3 & vec) const
   {
     return Vector3(this->x - vec.x, this->y - vec.y, this->z - vec.z);
   }
-  Vector3 Vector3::operator*(const Vector3 & vec) const
+
+  Vector3 
+    Vector3::operator*(const Vector3 & vec) const
   {
     return Vector3(this->x * vec.x, this->y * vec.y, this->z * vec.z);
   }
@@ -93,6 +100,7 @@ namespace dqEngineSDK
     this->z /= divi;
     return *this;
   }
+
   Vector3 & Vector3::operator^=(const Vector3 & vec)
   {
     Vector3 cVector(*this);
@@ -101,15 +109,34 @@ namespace dqEngineSDK
     this->z = (cVector.x * vec.y) - (cVector.y * vec.x);
     return *this;
   }
+
+  Vector3 & Vector3::operator=(const Vector3 & _vector)
+  {
+    this->x = _vector.x;
+    this->y = _vector.y;
+    this->z = _vector.z;
+    return *this;
+  }
+
+  Vector3 & Vector3::operator=(const float & number)
+  {
+    this->x = number;
+    this->y = number;
+    this->z = number;
+    return *this;
+  }
+
   Vector3 & Vector3::Normalize()
   {    
     return *this /= Magnitude();
   }
+
   float Vector3::operator[](const int32 & i) const
   {
     assert(i < 3 && i > -1);
     return (&x)[i];
   }
+
   float Vector3::operator|(const Vector3 & vec) const
   {
     return (this->x * vec.x) + (this->y * vec.y) + (this->z * vec.z);

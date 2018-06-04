@@ -33,7 +33,10 @@ namespace dqEngineSDK
     Vector4&  operator*= (const float&);
     Vector4&  operator/= (const Vector4&);
     Vector4&  operator/= (const float&);
+    Vector4&  operator= (const Vector4& _vector);
+    Vector4&  operator= (const float& number);
 
+    Vector4&  equalTo(const Vector3& _vector, const float& w_value);
     Vector4   Normalized() const;
     float     Magnitude() const;
     float     HalfMagnitude() const;

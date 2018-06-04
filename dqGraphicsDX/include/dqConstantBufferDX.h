@@ -1,6 +1,7 @@
 #pragma once
 #include "dqGraphicsBufferDX.h"
 #include "dqDeviceDX.h"
+#include "dqDeviceContextDX.h"
 
 namespace dqEngineSDK 
 {
@@ -19,7 +20,12 @@ namespace dqEngineSDK
     HRESULT
     create( dqDeviceDX* pd3dDevice, Vector < T >& pConstant );
 
-  private:
+    void
+    setInVertexShader(dqDeviceContextDX* pd3dDeviceContext, UINT regNum = 0) {
+      (*pd3dDeviceContext->getReference())->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+    }
+
+  public:
     ID3D11Buffer * m_pConstantBuffer;
   };
 
@@ -67,10 +73,10 @@ namespace dqEngineSDK
     /* Buffer Description                                                   */
     /************************************************************************/
     D3D11_BUFFER_DESC bufferDesc;
-    bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+    bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
     bufferDesc.ByteWidth = sizeof(T) * pConstant.size();
     bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-    bufferDesc.CPUAccessFlags = 0;
+    bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
     bufferDesc.MiscFlags = 0;
 
     /************************************************************************/

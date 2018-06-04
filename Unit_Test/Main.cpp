@@ -5,15 +5,25 @@
 #include <windowsx.h>
 #include <string>
 
+#include <dqVector3.h>
+
 #include <dqGraphicsDXPrerequisites.h>
 #include <dqGraphicsAPIDX.h>
 #include <dqModelDX.h>
 
 #include <dqCamera.h>
+#include <dqMath.h>
+#include <DirectXMath.h>
+
+#include <dqConstantBufferDX.h>
 
 #include <SFML/Window.hpp>
 
 using sf::Keyboard;
+using namespace dqEngineSDK;
+using namespace DirectX;
+
+dqConstantBufferDX<uint8> g_matrixBuffer;
 
 /*============================================================================*/
 /* Prototypes                                                                 */
@@ -25,13 +35,16 @@ LRESULT CALLBACK WindowProc(HWND hWnd,
                             WPARAM wParam, 
                             LPARAM lParam);
 
-int WINAPI WinMain(HINSTANCE hInstance, 
-                   HINSTANCE hPrevInstance, 
-                   LPSTR lpCmdLine, 
-                   int  windowStyle)
+//int WINAPI WinMain(HINSTANCE hInstance, 
+//                   HINSTANCE hPrevInstance, 
+//                   LPSTR lpCmdLine, 
+//                   int  windowStyle)
+int main()
 {
   HWND hWnd;
   WNDCLASSEX wc;
+
+  HINSTANCE hInstance = GetModuleHandle(0);
 
   ZeroMemory(&wc, sizeof(WNDCLASSEX));
 
@@ -60,7 +73,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
     hInstance,
     NULL);
 
-  ShowWindow(hWnd, windowStyle);
+  ShowWindow(hWnd, SW_SHOW);
 
   /************************************************************************/
   /* Init Graphics API                                                    */
@@ -98,10 +111,45 @@ int WINAPI WinMain(HINSTANCE hInstance,
   //graphicsAPI.addGeometry(triangle);
 
   /************************************************************************/
-  /* Triangle                                                             */
+  /* SpaceShip                                                            */
   /************************************************************************/
   dqEngineSDK::dqModelDX spaceShip;
   graphicsAPI.LoadModelFromFile(spaceShip, "Nave_low_v1.fbx");
+
+  RECT clientRect;
+  GetClientRect(hWnd, &clientRect);
+  int32 width = clientRect.right - clientRect.left;
+  int32 height = clientRect.bottom - clientRect.top;
+
+  XMMATRIX matWorld = XMMatrixIdentity();
+
+  // Matriz del Mundo.
+  Matrix4x4 worldMat;
+  worldMat.identityMatrix();
+  worldMat.Transpose();
+
+  // Matriz de Proyección.
+  Matrix4x4 projectionMat = Matrix4x4::perpectiveFOVLH(75.0f,
+                                                      (float)width / (float)height,
+                                                      0.01f,
+                                                      1000.0f);
+  //projectionMat.Transpose();
+
+  XMMATRIX matProj = XMMatrixPerspectiveFovLH(Math::TORADIANS * 75,
+                                              (float)width / (float)height,
+                                              0.01f,
+                                              1000.0f);
+
+  XMVECTOR up = XMVectorSet(0, 1, 0, 0);
+  XMVECTOR eyePos = XMVectorSet(0, 1, -2, 1);
+  XMVECTOR lookAtPos = XMVectorSet(0, 0, 0, 1);
+
+  XMMATRIX matView = XMMatrixLookAtLH(eyePos, lookAtPos, up);
+
+  matView = XMMatrixTranspose(matView);
+  matProj = XMMatrixTranspose(matProj);
+
+ 
 
   //Add Shaders
   spaceShip.addPixelShader(&pixelShader);
@@ -113,8 +161,38 @@ int WINAPI WinMain(HINSTANCE hInstance,
   /************************************************************************/
   /* Camera                                                               */
   /************************************************************************/
+  float verticalValue = 0.0f;
+  float horizontalValue = 0.0f;
+  bool cntrlValue = false;
+  float cameraSpeed = 5.0f;
+  dqEngineSDK::Vector3 cameraForce;
 
+  dqEngineSDK::dqCamera camera;  
+  
+  camera.update();
+  dqEngineSDK::Matrix4x4 viewMat = camera.camera_to_world.Transposed();
+  //dqEngineSDK::Matrix4x4 viewMat = camera.camera_to_world;
+  Vector<uint8> matBuffer;
+  matBuffer.resize(sizeof(XMMATRIX) * 3);
+  memcpy((&matBuffer[0]) + sizeof(XMMATRIX) * 0, &matWorld, sizeof(XMMATRIX));
+  memcpy((&matBuffer[0]) + sizeof(XMMATRIX) * 1, &matView, sizeof(XMMATRIX));
+  memcpy((&matBuffer[0]) + sizeof(XMMATRIX) * 2, &matProj, sizeof(XMMATRIX));
 
+  
+  Vector<uint8> matmatBuffer;
+  matmatBuffer.resize(sizeof(Matrix4x4) * 3);
+  memcpy((&matmatBuffer[0]) + sizeof(Matrix4x4) * 0, &worldMat, sizeof(Matrix4x4));
+  memcpy((&matmatBuffer[0]) + sizeof(Matrix4x4) * 1, &viewMat, sizeof(Matrix4x4));
+  memcpy((&matmatBuffer[0]) + sizeof(Matrix4x4) * 2, &projectionMat, sizeof(Matrix4x4));
+  
+  g_matrixBuffer.create(graphicsAPI.getDevice(), matmatBuffer);
+  g_matrixBuffer.setInVertexShader(graphicsAPI.getDeviceContext(), 0);
+
+  /************************************************************************/
+  /* Time                                                                 */
+  /************************************************************************/
+  sf::Clock deltaClock;
+  sf::Time deltaTime;
 
   /************************************************************************/
   /* APP Loop                                                             */
@@ -132,13 +210,58 @@ int WINAPI WinMain(HINSTANCE hInstance,
     }
 
     /************************************************************************/
+    /* Delta Time                                                           */
+    /************************************************************************/
+    
+    //La función "restart" regresa el tiempo transcurrido desde el último 
+    //reinicio del reloj.
+    deltaTime = deltaClock.restart();
+
+    /************************************************************************/
     /* SFML INPUT                                                           */
     /************************************************************************/
-    if (Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-     
+    verticalValue = (Keyboard::isKeyPressed(sf::Keyboard::Down) ? -1 : 0 );
+    verticalValue = (Keyboard::isKeyPressed(sf::Keyboard::Up) ? 1 : verticalValue);
+    horizontalValue = (Keyboard::isKeyPressed(sf::Keyboard::Right) ? 1 : 0);
+    horizontalValue = (Keyboard::isKeyPressed(sf::Keyboard::Left) ? -1 : horizontalValue);
+    cntrlValue = Keyboard::isKeyPressed(sf::Keyboard::LControl);
+    
+    /************************************************************************/
+    /* Camera Movement                                                      */
+    /************************************************************************/
+    cameraForce.x = horizontalValue;
+    cameraForce.y = verticalValue;
+
+    cameraForce *= deltaTime.asSeconds() * cameraSpeed;
+
+    if (cameraForce.Magnitude() != 0) {
+      
+      if (cntrlValue) {
+        camera.pan(cameraForce);
+      } 
+      else {
+        camera.move(cameraForce);
+      }
+      
     }
 
-    //Render Frame
+    camera.update();
+    viewMat = camera.camera_to_world.Transposed();
+    
+    D3D11_MAPPED_SUBRESOURCE mappedResource;
+    SecureZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+    ID3D11DeviceContext* devCont = *graphicsAPI.getDeviceContext()->getReference();
+    devCont->Map(g_matrixBuffer.m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+    
+    memcpy((&matmatBuffer[0]) + sizeof(Matrix4x4) * 1, &viewMat, sizeof(Matrix4x4));
+    memcpy(mappedResource.pData, &matmatBuffer[0], sizeof(Matrix4x4) * 3);
+
+    devCont->Unmap(g_matrixBuffer.m_pConstantBuffer, 0);
+    
+    /************************************************************************/
+    /* Render Frame                                                         */
+    /************************************************************************/
     graphicsAPI.RenderFrame();
   }
 

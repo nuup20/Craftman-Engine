@@ -1,10 +1,12 @@
 #pragma once
 #include "dqVector3.h"
+#include "dqModule.h"
 
 namespace dqEngineSDK
 {
-  struct DQ_UTILITY_EXPORT dqPlane
+  class DQ_UTILITY_EXPORT dqPlane
   {
+  public:
     Vector3 vA, vB;
 
     dqPlane();

@@ -18,6 +18,7 @@ namespace dqEngineSDK
   dqGraphicsAPIDX::dqGraphicsAPIDX()
   {
   }
+
   dqGraphicsAPIDX::~dqGraphicsAPIDX()
   {
     Clean();
@@ -143,7 +144,8 @@ namespace dqEngineSDK
     /************************************************************************/
     /* Clear                                                                */
     /************************************************************************/
-    m_deviceContext.clearRenderTargetView(m_backBuffer, m_clearColor);   
+    LinearColor color(1, 0, 1, 1);
+    m_deviceContext.clearRenderTargetView(m_backBuffer, color);
     
     /************************************************************************/
     /* Draw                                                                 */
