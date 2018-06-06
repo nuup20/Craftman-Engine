@@ -27,6 +27,7 @@ namespace dqEngineSDK
   {
     if (m_devCont) {
       m_devCont->Release();
+      m_devCont = nullptr;
     }
   }
 

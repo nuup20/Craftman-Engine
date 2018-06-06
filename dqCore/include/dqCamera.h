@@ -14,6 +14,9 @@ namespace dqEngineSDK
     ~dqCamera();
 
     void
+    init();
+
+    void
     update();
 
     /**
@@ -21,7 +24,7 @@ namespace dqEngineSDK
      * @param force Dirección con magnitud aplicada al movimiento.
      */
     void 
-    move(Vector3 force);
+    move(const Vector3& force);
 
     /**
      * @brief Posiciona la Cámara en una coordenada específica.
@@ -30,18 +33,49 @@ namespace dqEngineSDK
     move(float x, float y, float z);
     
     void 
-    pan(Vector3 force);
+    trackX(float _force);
+
+    void
+    trackY(float _force);
+
+    void
+    dolly(float _force);
     
     void 
     rotate();
+
+    void
+    yaw(float radians);
+
+    void
+    pitch(float radians);
+
+    void
+    roll(float radians);
     
     void 
-    orbitate();
+    orbitate();    
+
+  private:
+
+    void
+    setModelViewMatrix();
+
+    void
+    orthonormalVectors();
+
+  public:
 
     Vector3 position;
-    Vector3 target;
+    Vector3 target; 
 
     Matrix4x4 camera_to_world;
+
+  private:
+
+    Vector3 up;
+    Vector3 right;
+    Vector3 forward;
 
     bool isDirty;
   };

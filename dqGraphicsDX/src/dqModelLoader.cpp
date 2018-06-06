@@ -45,7 +45,8 @@ namespace dqEngineSDK
     /* Load Scene                                                           */
     /************************************************************************/
     const aiScene* scene = aiImportFile(filePath.c_str(),
-                                        aiProcessPreset_TargetRealtime_MaxQuality);
+                                        aiProcessPreset_TargetRealtime_MaxQuality |
+                                        aiProcess_ConvertToLeftHanded);
 
     //Send an Error to infoCollector if scene was not found;
     if (scene == nullptr) {
@@ -75,12 +76,21 @@ namespace dqEngineSDK
       /************************************************************************/
       for (uint32 vertexIdx = 0; vertexIdx < pAssimpMesh->mNumVertices; ++vertexIdx) {
         
-        aiVector3D& assimpVertex = pAssimpMesh->mVertices[vertexIdx];        
+        //Get Vertices.
+        aiVector3D& assimpVector = pAssimpMesh->mVertices[vertexIdx];        
 
-        vertex.x = assimpVertex.x;
-        vertex.y = assimpVertex.y;
-        vertex.z = assimpVertex.z;
+        vertex.x = assimpVector.x;
+        vertex.y = assimpVector.y;
+        vertex.z = assimpVector.z;
         
+        //Get Normals
+        assimpVector = pAssimpMesh->mNormals[vertexIdx];
+
+        vertex.nx = assimpVector.x;
+        vertex.ny = assimpVector.y;
+        vertex.nz = assimpVector.z;
+       
+        //Fill with color
         vertex.color.r = 0.5f;
         vertex.color.g = 0.5f;
         vertex.color.b = 0.5f;
@@ -101,7 +111,6 @@ namespace dqEngineSDK
         for (uint32 indicesIdx = 0; indicesIdx < numIndices; ++indicesIdx) {
           indices.push_back(pAssimpMesh->mFaces[faceIdx].mIndices[indicesIdx]);
         }
-
       }
 
       //Create Mesh.

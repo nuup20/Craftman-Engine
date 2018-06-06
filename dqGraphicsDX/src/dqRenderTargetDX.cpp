@@ -26,6 +26,7 @@ namespace dqEngineSDK
   {
     if (m_texture2D) {
       m_texture2D->Release();
+      m_texture2D = nullptr;
     }
   }
 

@@ -15,7 +15,7 @@ namespace dqEngineSDK
     Vector4(DEF_INIT::E);
     Vector4(const Vector4&);
     Vector4(const Vector2&);
-    Vector4(const Vector3&);
+    explicit Vector4(const Vector3&);
     Vector4(float x, float y, float z, float w);
     ~Vector4();
 

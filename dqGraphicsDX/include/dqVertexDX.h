@@ -8,6 +8,7 @@ namespace dqEngineSDK
   struct DQ_GRAPHICSDX_EXPORT dqVertexDX
   {
     float         x, y, z;
+    float         nx, ny, nz;
     LinearColor   color;
   }; 
 }

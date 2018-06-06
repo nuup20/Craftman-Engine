@@ -32,7 +32,7 @@ namespace dqEngineSDK
     this->x = vec.x; 
     this->y = vec.y; 
     this->z = 0.0f; 
-    this->w = 0.0f;
+    this->w = 1.0f;
   }
 
   Vector4::Vector4(const Vector3 & vec)
@@ -40,7 +40,7 @@ namespace dqEngineSDK
     this->x = vec.x; 
     this->y = vec.y; 
     this->z = vec.z; 
-    this->w = 0.0f;
+    this->w = 1.0f;
   }
 
   Vector4::Vector4(float x, float y, float z, float w)

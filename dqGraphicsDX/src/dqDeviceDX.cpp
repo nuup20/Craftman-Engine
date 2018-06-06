@@ -75,7 +75,7 @@ namespace dqEngineSDK
                                 dqVertexShaderDX& vShader)
   {
    m_device->CreateInputLayout(iLayout.ied, 
-                               2, 
+                               3, 
                                vShader.getBlobPointer()->GetBufferPointer(),
                                vShader.getBlobPointer()->GetBufferSize(),
                                iLayout.GetLayoutReference());

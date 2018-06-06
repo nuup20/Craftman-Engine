@@ -64,8 +64,8 @@ int main()
     "WindowClass",
     "Unit Test Graphics",
     WS_OVERLAPPEDWINDOW,
-    300,
-    300,
+    SCREEN_WIDTH,
+    SCREEN_HEIGHT,
     wr.right - wr.left,
     wr.bottom - wr.top,
     NULL,
@@ -98,19 +98,6 @@ int main()
   graphicsAPI.createAndSetInputLayout(vertexShader);
 
   /************************************************************************/
-  /* Triangle                                                             */
-  /************************************************************************/
-  dqEngineSDK::dqModelDX triangle;
-  triangle.createTriangle(graphicsAPI.getDevice());
-  
-  //Add Shaders
-  triangle.addPixelShader(&pixelShader);
-  triangle.addVertexShader(&vertexShader);
-
-  //Add Geometry
-  //graphicsAPI.addGeometry(triangle);
-
-  /************************************************************************/
   /* SpaceShip                                                            */
   /************************************************************************/
   dqEngineSDK::dqModelDX spaceShip;
@@ -120,37 +107,7 @@ int main()
   GetClientRect(hWnd, &clientRect);
   int32 width = clientRect.right - clientRect.left;
   int32 height = clientRect.bottom - clientRect.top;
-
-  XMMATRIX matWorld = XMMatrixIdentity();
-
-  // Matriz del Mundo.
-  Matrix4x4 worldMat;
-  worldMat.identityMatrix();
-  worldMat.Transpose();
-
-  // Matriz de Proyección.
-  Matrix4x4 projectionMat = Matrix4x4::perpectiveFOVLH(75.0f,
-                                                      (float)width / (float)height,
-                                                      0.01f,
-                                                      1000.0f);
-  //projectionMat.Transpose();
-
-  XMMATRIX matProj = XMMatrixPerspectiveFovLH(Math::TORADIANS * 75,
-                                              (float)width / (float)height,
-                                              0.01f,
-                                              1000.0f);
-
-  XMVECTOR up = XMVectorSet(0, 1, 0, 0);
-  XMVECTOR eyePos = XMVectorSet(0, 1, -2, 1);
-  XMVECTOR lookAtPos = XMVectorSet(0, 0, 0, 1);
-
-  XMMATRIX matView = XMMatrixLookAtLH(eyePos, lookAtPos, up);
-
-  matView = XMMatrixTranspose(matView);
-  matProj = XMMatrixTranspose(matProj);
-
  
-
   //Add Shaders
   spaceShip.addPixelShader(&pixelShader);
   spaceShip.addVertexShader(&vertexShader);
@@ -163,22 +120,36 @@ int main()
   /************************************************************************/
   float verticalValue = 0.0f;
   float horizontalValue = 0.0f;
-  bool cntrlValue = false;
+  float zValue = 0.0f;
   float cameraSpeed = 5.0f;
+
+  float rotAngle = 0.0f;
+
+  bool cntrlValue = false;
+
   dqEngineSDK::Vector3 cameraForce;
 
   dqEngineSDK::dqCamera camera;  
+
+  /************************************************************************/
+  /*  Matrices                                                            */
+  /************************************************************************/
+
+  // Matriz del Mundo.
+  Matrix4x4 worldMat;
+  worldMat.identityMatrix();
+
+  // Matriz de Proyección.
+  Matrix4x4 projectionMat = Matrix4x4::perpectiveFOVLH(45.0f,
+    (float)width / (float)height,
+    0.01f,
+
+    1000.0f);
+  dqEngineSDK::Matrix4x4 viewMat = camera.camera_to_world.Transposed();
   
   camera.update();
-  dqEngineSDK::Matrix4x4 viewMat = camera.camera_to_world.Transposed();
-  //dqEngineSDK::Matrix4x4 viewMat = camera.camera_to_world;
-  Vector<uint8> matBuffer;
-  matBuffer.resize(sizeof(XMMATRIX) * 3);
-  memcpy((&matBuffer[0]) + sizeof(XMMATRIX) * 0, &matWorld, sizeof(XMMATRIX));
-  memcpy((&matBuffer[0]) + sizeof(XMMATRIX) * 1, &matView, sizeof(XMMATRIX));
-  memcpy((&matBuffer[0]) + sizeof(XMMATRIX) * 2, &matProj, sizeof(XMMATRIX));
-
   
+ 
   Vector<uint8> matmatBuffer;
   matmatBuffer.resize(sizeof(Matrix4x4) * 3);
   memcpy((&matmatBuffer[0]) + sizeof(Matrix4x4) * 0, &worldMat, sizeof(Matrix4x4));
@@ -186,7 +157,7 @@ int main()
   memcpy((&matmatBuffer[0]) + sizeof(Matrix4x4) * 2, &projectionMat, sizeof(Matrix4x4));
   
   g_matrixBuffer.create(graphicsAPI.getDevice(), matmatBuffer);
-  g_matrixBuffer.setInVertexShader(graphicsAPI.getDeviceContext(), 0);
+  g_matrixBuffer.setInVertexShader(graphicsAPI.getDeviceContext(), 0);  
 
   /************************************************************************/
   /* Time                                                                 */
@@ -222,27 +193,58 @@ int main()
     /************************************************************************/
     verticalValue = (Keyboard::isKeyPressed(sf::Keyboard::Down) ? -1 : 0 );
     verticalValue = (Keyboard::isKeyPressed(sf::Keyboard::Up) ? 1 : verticalValue);
+    
     horizontalValue = (Keyboard::isKeyPressed(sf::Keyboard::Right) ? 1 : 0);
     horizontalValue = (Keyboard::isKeyPressed(sf::Keyboard::Left) ? -1 : horizontalValue);
+
+    zValue = (Keyboard::isKeyPressed(sf::Keyboard::A) ? 1 : 0);
+    zValue = (Keyboard::isKeyPressed(sf::Keyboard::Z) ? -1 : zValue);
+    
     cntrlValue = Keyboard::isKeyPressed(sf::Keyboard::LControl);
+
+    if (Keyboard::isKeyPressed(sf::Keyboard::Y)) {
+      camera.yaw(15.f * Math::TORADIANS * deltaTime.asSeconds());
+    }
+    if (Keyboard::isKeyPressed(sf::Keyboard::H)) {
+      camera.yaw(-15.f * Math::TORADIANS * deltaTime.asSeconds());
+    }
+
+    if (Keyboard::isKeyPressed(sf::Keyboard::R)) {
+      camera.roll(15.f * Math::TORADIANS * deltaTime.asSeconds());
+    }
+    if (Keyboard::isKeyPressed(sf::Keyboard::F)) {
+      camera.roll(-15.f * Math::TORADIANS * deltaTime.asSeconds());
+    }
+
+    if (Keyboard::isKeyPressed(sf::Keyboard::P)) {
+      camera.pitch(15.f * Math::TORADIANS * deltaTime.asSeconds());
+    }
+    if (Keyboard::isKeyPressed(sf::Keyboard::L)) {
+      camera.pitch(-15.f * Math::TORADIANS * deltaTime.asSeconds());
+    }
+
+    if (Keyboard::isKeyPressed(sf::Keyboard::I)) {
+      camera.init();
+    }
     
     /************************************************************************/
     /* Camera Movement                                                      */
     /************************************************************************/
     cameraForce.x = horizontalValue;
     cameraForce.y = verticalValue;
+    cameraForce.z = zValue;
 
     cameraForce *= deltaTime.asSeconds() * cameraSpeed;
 
-    if (cameraForce.Magnitude() != 0) {
-      
+    if (cameraForce.magnitude() != 0) {      
       if (cntrlValue) {
-        camera.pan(cameraForce);
+        
       } 
       else {
-        camera.move(cameraForce);
-      }
-      
+        camera.trackX(cameraForce.x);
+        camera.trackY(cameraForce.y);
+        camera.dolly(cameraForce.z);
+      }      
     }
 
     camera.update();

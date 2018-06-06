@@ -84,9 +84,9 @@ namespace dqEngineSDK
     /************************************************************************/
     /* Vertex Position                                                      */
     /************************************************************************/
-    dqVertexDX v1 = { 0.0f, 0.5f, 0.0f, LinearColor(1.0f, 0.0f, 0.0f, 1.0f) };
-    dqVertexDX v2 = { 0.45f, -0.5, 0.0f, LinearColor(0.0f, 1.0f, 0.0f, 1.0f) };
-    dqVertexDX v3 = { -0.45f, -0.5f, 0.0f, LinearColor(0.0f, 0.0f, 1.0f, 1.0f) };
+    dqVertexDX v1 = { 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f, LinearColor(1.0f, 0.0f, 0.0f, 1.0f) };
+    dqVertexDX v2 = { 0.45f, -0.5, 0.0f, 0.0f, 0.0f, 0.0f,LinearColor(0.0f, 1.0f, 0.0f, 1.0f) };
+    dqVertexDX v3 = { -0.45f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, LinearColor(0.0f, 0.0f, 1.0f, 1.0f) };
 
     Vector<dqVertexDX> triVertices;
     triVertices.push_back(v1);
